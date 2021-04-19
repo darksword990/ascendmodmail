@@ -64,7 +64,7 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
-                let channel = guild.channels.create(`${message.author.id}-${message.author.username}`, {
+                let channel = await guild.channels.create(`${message.author.id}-${message.author.username}`, {
                     type: 'text',
                     permissionOverwrites: [
                         {
