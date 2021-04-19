@@ -76,11 +76,27 @@ client.on('message', async message => {
                             allow: ["VIEW_CHANNEL"]
                         },
                         {
-                            id: `833060206904213524`,
+                            id: `689445730636660825`, //remo
                             allow: ["VIEW_CHANNEL"]
                         },
                         {
-                            id: `833055674740375642`,
+                            id: `684095690812555305`, //atta
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `445643175369900032`, //rarted
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `741309836259491851`, //jupiter
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `623589834866556951`, //abeer
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `434409763233857536`, //crawler
                             allow: ["VIEW_CHANNEL"]
                         }
                     ]
@@ -123,7 +139,7 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
-    if (reaction.emoji.name == `👍` && reaction.message.embeds && reaction.message.embeds[0].description == `Please react below to delete the channel` && reaction.users.cache.array().length > 1) {
+    if (reaction.emoji.name == `👍` && reaction.message.embeds && reaction.message.embeds[0].description == `Please react below to delete the channel` && reaction.users.cache.array().length > 1 && ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536'].includes(user.id)) {
         reaction.message.channel.delete()
     }
 })
