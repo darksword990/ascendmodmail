@@ -104,7 +104,12 @@ client.on('message', async message => {
                             description: `Please react below to delete the channel`
                         }
                     }
-                )
+                ).then(mm => {
+                    console.log('done')
+                })
+                .catch(err => {
+                    console.err(err)
+                })
                 await c.react(`👍`)
             }
             selected = false
