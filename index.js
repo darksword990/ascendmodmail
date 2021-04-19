@@ -98,21 +98,18 @@ client.on('message', async message => {
                 .catch(err => {
                     console.error(err)
                 });
-                let c = await channel.send(
+                await channel.send(
                     {
                         embed: {
                             description: `Please react below to delete the channel`
                         }
                     }
                 ).then(mm => {
-                    console.log('done')
+                    mm.react('👍')
                 })
                 .catch(err => {
                     console.err(err)
                 })
-                setTimeout(async () => {
-                    await c.react(`👍`)
-                }, 500)
             }
             selected = false
             selectedOption = null
