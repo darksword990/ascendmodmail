@@ -110,7 +110,7 @@ client.on('message', async message => {
                 .catch(err => {
                     console.err(err)
                 })
-                setTimeout(() => {
+                setTimeout(async () => {
                     await c.react(`👍`)
                 }, 500)
             }
