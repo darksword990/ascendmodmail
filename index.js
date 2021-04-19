@@ -78,6 +78,7 @@ client.on('message', async message => {
                     console.error(err)
                 })
             }
+            selected = false
             selectedOption = null
             setTimeout(() => {
                 client.ongoingMails.delete(message.author.id)
