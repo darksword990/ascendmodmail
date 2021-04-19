@@ -123,7 +123,7 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
-    if (reaction.emoji.name == `👍` && reaction.message.embeds[0].description == `Please react below to delete the channel` && reaction.users.cache.array().length > 1) {
+    if (reaction.emoji.name == `👍` && reaction.message.embeds[0].description == `Please react below to delete the channel` && reaction.users.cache.array().length > 2) {
         reaction.message.channel.delete()
     }
 })
