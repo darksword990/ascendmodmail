@@ -107,7 +107,7 @@ client.on('message', async message => {
             collectormsg.stop()
         })
     }
-    if (message.guild && message.channel.ticket == true && message.content.toLowerCase() == `!delch`) {
+    if (message.guild && message.channel.ticket && message.channel.ticket == true && message.content.toLowerCase() == `!delch`) {
         message.channel.delete()
     }
 })
