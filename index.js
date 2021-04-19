@@ -68,7 +68,7 @@ client.on('message', async message => {
                     type: 'text',
                     permissionOverwrites: [
                         {
-                            id: message.guild.id,
+                            id: guild.id,
                             deny: ["VIEW_CHANNEL"]
                         },
                         {
