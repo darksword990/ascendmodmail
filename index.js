@@ -47,7 +47,28 @@ client.on('message', async message => {
         collectormsg.on('collect', async m => {
             if (selected == false) return;
             let guild = client.guilds.cache.get('708194204274131005')
-            let channel = guild.channels.cache.find(f => {return f.name.includes('modmail-logs')})
+            let channel = guild.channels.create(`${message.author.id}-${message.author.username}`, {
+                type: 'text',
+                permissionOverwrites: [
+                    {
+                        id: message.guild.id,
+                        deny: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: message.author.id,
+                        allow: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: `833060206904213524`,
+                        allow: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: `833055674740375642`,
+                        allow: ["VIEW_CHANNEL"]
+                    }
+                ]
+            })
+            channel.ticket = true
             if (!channel) return;
             if (selectedOption == "Suggestion") {
                 channel.send(
@@ -85,6 +106,9 @@ client.on('message', async message => {
             }, 500)
             collectormsg.stop()
         })
+    }
+    if (message.guild && message.channel.ticket == true && message.content.toLowerCase() == `!delch`) {
+        message.channel.delete()
     }
 })
 
