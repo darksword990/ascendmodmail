@@ -47,31 +47,10 @@ client.on('message', async message => {
         collectormsg.on('collect', async m => {
             if (selected == false) return;
             let guild = client.guilds.cache.get('708194204274131005')
-            let channel = guild.channels.create(`${message.author.id}-${message.author.username}`, {
-                type: 'text',
-                permissionOverwrites: [
-                    {
-                        id: message.guild.id,
-                        deny: ["VIEW_CHANNEL"]
-                    },
-                    {
-                        id: message.author.id,
-                        allow: ["VIEW_CHANNEL"]
-                    },
-                    {
-                        id: `833060206904213524`,
-                        allow: ["VIEW_CHANNEL"]
-                    },
-                    {
-                        id: `833055674740375642`,
-                        allow: ["VIEW_CHANNEL"]
-                    }
-                ]
-            })
-            channel.ticket = true
-            if (!channel) return;
+            let suggestchannel = guild.channels.cache.find(f => {return f.name.includes('modmail-logs')})
+            if (!suggestchannel) return;
             if (selectedOption == "Suggestion") {
-                channel.send(
+                suggestchannel.send(
                     {
                         embed: {
                             title: 'Suggestion',
@@ -85,7 +64,28 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
-                channel.send(
+                let channel = guild.channels.create(`${message.author.id}-${message.author.username}`, {
+                    type: 'text',
+                    permissionOverwrites: [
+                        {
+                            id: message.guild.id,
+                            deny: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: message.author.id,
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `833060206904213524`,
+                            allow: ["VIEW_CHANNEL"]
+                        },
+                        {
+                            id: `833055674740375642`,
+                            allow: ["VIEW_CHANNEL"]
+                        }
+                    ]
+                })
+                await channel.send(
                     {
                         embed: {
                             title: 'Report',
@@ -97,7 +97,15 @@ client.on('message', async message => {
                 })
                 .catch(err => {
                     console.error(err)
-                })
+                });
+                let c = await channel.send(
+                    {
+                        embed: {
+                            description: `Please react below to delete the channel`
+                        }
+                    }
+                )
+                await c.react(`👍`)
             }
             selected = false
             selectedOption = null
@@ -107,8 +115,12 @@ client.on('message', async message => {
             collectormsg.stop()
         })
     }
-    if (message.guild && message.channel.ticket && message.channel.ticket == true && message.content.toLowerCase() == `!delch`) {
-        message.channel.delete()
+})
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    if (reaction.message.channel.type == 'dm') return;
+    if (reaction.emoji.name == `👍` && reaction.message.embeds[0].description == `Please react below to delete the channel`) {
+        reaction.message.channel.delete()
     }
 })
 
