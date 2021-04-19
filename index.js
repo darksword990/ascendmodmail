@@ -110,7 +110,9 @@ client.on('message', async message => {
                 .catch(err => {
                     console.err(err)
                 })
-                await c.react(`👍`)
+                setTimeout(() => {
+                    await c.react(`👍`)
+                }, 500)
             }
             selected = false
             selectedOption = null
