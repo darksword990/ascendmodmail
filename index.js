@@ -14,14 +14,14 @@ client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
     if (message.channel.type == 'dm') {
-        client.cooldowns.set(message.author.id, Date.now())
+        if (!client.cooldowns.has(message.author.id)) {
+            client.cooldowns.set(message.author.id)
+        }
         let expiration = Date.now()+ms('5m')
-        if (client.cooldowns.has(message.author.id)) {
             if (Date.now() < expiration) {
                 let timeleft = expiration - Date.now()
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
             }
-        }
         setTimeout(async () => {
             client.cooldowns.delete(message.author.id)
         }, expiration)
