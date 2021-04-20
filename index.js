@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 client.ongoingMails = new Discord.Collection()
 client.cooldowns = new Discord.Collection()
+client.userReports = new Discord.Collection()
 
 client.on('ready', () => {
     client.user.setActivity('DM me for assistance')
@@ -64,6 +65,7 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
+                client.userReports.set(message.author.id, message.author.id)
                 let channel = await guild.channels.create(`${message.author.id}`, {
                     type: 'text',
                     permissionOverwrites: [
@@ -139,7 +141,8 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
-    if (reaction.emoji.name == `👍` && reaction.message.embeds && reaction.message.embeds[0].description && reaction.message.embeds[0].description == `Please react below to delete the channel` && reaction.users.cache.array().length > 1 && ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536'].includes(user.id)) {
+    if (reaction.emoji.name == `👍` && client.userReports.array().includes(reaction.message.channel.name) && ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536'].includes(user.id)) {
+        client.userReports.delete(reaction.message.channel.name)
         reaction.message.channel.delete()
     }
 })
