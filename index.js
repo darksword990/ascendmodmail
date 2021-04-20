@@ -14,9 +14,9 @@ client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
     if (message.channel.type == 'dm') {
-        if (client.cooldowns.has(message.author.id)) {
         let now = Date.now()
         let expiration = now+ms('5m')
+        if (client.cooldowns.has(message.author.id)) {
             if (now < expiration) {
                 let timeleft = expiration - now
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
