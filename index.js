@@ -14,6 +14,11 @@ client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
     if (message.channel.type == 'dm') {
+        let expiration = Date.now()+ms('5m')
+        if (client.cooldowns.has(message.author.id)) {
+            let timeleft = expiration - Date.now()
+            return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
+        }
         client.ongoingMails.set(message.author.id, message.author)
         let selectedOption = null
         let selected = false
@@ -138,11 +143,6 @@ client.on('message', async message => {
             collectormsg.stop()
         })
         client.cooldowns.set(message.author.id, Date.now())
-        let expiration = Date.now()+ms('5m')
-        if (client.cooldowns.has(message.author.id)) {
-            let timeleft = expiration - Date.now()
-            return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
-        }
         setTimeout(async () => {
             client.cooldowns.delete(message.author.id)
         }, expiration)
