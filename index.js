@@ -20,7 +20,7 @@ client.on('message', async message => {
         let now = Date.now()
         let expiration = now+ms('5m')
             if (now < expiration) {
-                let timeleft = expiration - Date.now()
+                let timeleft = expiration - now
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
             }
         setTimeout(async () => {
