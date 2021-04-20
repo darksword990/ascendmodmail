@@ -17,8 +17,9 @@ client.on('message', async message => {
         if (!client.cooldowns.has(message.author.id)) {
             client.cooldowns.set(message.author.id)
         }
-        let expiration = Date.now()+ms('5m')
-            if (Date.now() < expiration) {
+        let now = Date.now()
+        let expiration = now+ms('5m')
+            if (now < expiration) {
                 let timeleft = expiration - Date.now()
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
             }
