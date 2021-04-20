@@ -15,17 +15,17 @@ client.on('message', async message => {
     if (message.author.bot) return;
     if (message.channel.type == 'dm') {
         let now = Date.now()
-        let expiration = now+ms('5m')
         if (client.cooldowns.has(message.author.id)) {
+            let expiration = client.cooldowns.get(message.author.id)+ms('5m')
             if (now < expiration) {
                 let timeleft = expiration - now
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
             }
         }
+        client.cooldowns.set(message.author.id, now)
         setTimeout(async () => {
             client.cooldowns.delete(message.author.id)
-        }, expiration)
-        client.cooldowns.set(message.author.id)
+        }, ms('5m'))
         client.ongoingMails.set(message.author.id, message.author)
         let selectedOption = null
         let selected = false
