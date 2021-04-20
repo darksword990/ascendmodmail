@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const ms = require('ms')
 const client = new Discord.Client()
 client.ongoingMails = new Discord.Collection()
 client.cooldowns = new Discord.Collection()
@@ -136,6 +137,15 @@ client.on('message', async message => {
             }, 500)
             collectormsg.stop()
         })
+        client.cooldowns.set(message.author.id, Date.now())
+        let expiration = Date.now()+ms('5m')
+        if (client.cooldowns.has(message.author.id)) {
+            let timeleft = expiration - Date.now()
+            return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
+        }
+        setTimeout(async () => {
+            client.cooldowns.delete(message.author.id)
+        }, expiration)
     }
 })
 
