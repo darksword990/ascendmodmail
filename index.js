@@ -16,8 +16,9 @@ client.on('message', async message => {
     // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
     if (message.channel.type == 'dm') {
         let now = Date.now()
+        let cooldownamount = ms('1m')
         if (client.cooldowns.has(message.author.id)) {
-            let expiration = client.cooldowns.get(message.author.id)+ms('5m')
+            let expiration = client.cooldowns.get(message.author.id)+cooldownamount
             if (now < expiration) {
                 let timeleft = expiration - now
                 return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
@@ -26,7 +27,7 @@ client.on('message', async message => {
         client.cooldowns.set(message.author.id, now)
         setTimeout(async () => {
             client.cooldowns.delete(message.author.id)
-        }, ms('5m'))
+        }, cooldownamount)
         client.ongoingMails.set(message.author.id, message.author)
         let selectedOption = null
         let selected = false
@@ -81,13 +82,7 @@ client.on('message', async message => {
             } else if (selectedOption == "Report") {
                 let name;
                 if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
-                    let n = []
-                    for (const c of guild.channels.cache.array()) {
-                        if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
-                            n.push(guild.channels.cache.find(f => f.name.includes(message.author.id)))
-                        }
-                    }
-                    name = `${message.author.id}-${n.length}`
+                    name = `${message.author.id}-${Math.random() * 10 + 1}`
                 } else {
                     name = `${message.author.id}`
                 }
