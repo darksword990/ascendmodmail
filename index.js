@@ -130,7 +130,6 @@ client.on('message', async message => {
                     console.err(err)
                 })
             }
-            m.channel.bulkDelete(m.channel.messages.cache.size, true)
             selected = false
             selectedOption = null
             setTimeout(() => {
