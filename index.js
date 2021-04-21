@@ -9,10 +9,11 @@ client.on('ready', () => {
     client.user.setActivity('DM me for assistance')
     console.log('ready')
 })
-
+let userperms = ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536','722319956171030569','421708434165989378']
 client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
+    // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
     if (message.channel.type == 'dm') {
         let now = Date.now()
         if (client.cooldowns.has(message.author.id)) {
@@ -79,42 +80,29 @@ client.on('message', async message => {
                 })
             } else if (selectedOption == "Report") {
                 client.userReports.set(message.author.id, message.author.id)
+                let perms = [
+                    {
+                        id: guild.id,
+                        deny: ["VIEW_CHANNEL"]
+                    },
+                    {
+                        id: message.author.id,
+                        allow: ["VIEW_CHANNEL"]
+                    }
+                ]
+                for (const id of userperms) {
+                    if (guild.members.cache.has(id)) {
+                        perms.push(
+                            {
+                                id: id,
+                                allow: ["VIEW_CHANNEL"]
+                            }
+                        )
+                    }
+                }
                 let channel = await guild.channels.create(`${message.author.id}`, {
                     type: 'text',
-                    permissionOverwrites: [
-                        {
-                            id: guild.id,
-                            deny: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: message.author.id,
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `689445730636660825`, //remo
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `684095690812555305`, //atta
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `445643175369900032`, //rarted
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `741309836259491851`, //jupiter
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `623589834866556951`, //abeer
-                            allow: ["VIEW_CHANNEL"]
-                        },
-                        {
-                            id: `434409763233857536`, //crawler
-                            allow: ["VIEW_CHANNEL"]
-                        }
-                    ]
+                    permissionOverwrites: perms
                 })
                 await channel.send(
                     {
@@ -154,7 +142,7 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
-    if (reaction.emoji.name == `👍` && client.userReports.array().includes(reaction.message.channel.name) && ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536'].includes(user.id)) {
+    if (reaction.emoji.name == `👍` && client.userReports.array().includes(reaction.message.channel.name) && userperms.includes(user.id)) {
         client.userReports.delete(reaction.message.channel.name)
         reaction.message.channel.delete()
     }
