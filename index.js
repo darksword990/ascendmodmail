@@ -16,7 +16,7 @@ client.on('message', async message => {
     // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
     if (message.channel.type == 'dm') {
         let now = Date.now()
-        let cooldownamount = ms('1m')
+        let cooldownamount = ms('5s')
         if (client.cooldowns.has(message.author.id)) {
             let expiration = client.cooldowns.get(message.author.id)+cooldownamount
             if (now < expiration) {
