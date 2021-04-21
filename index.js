@@ -130,12 +130,12 @@ client.on('message', async message => {
                     console.err(err)
                 })
             }
+            m.channel.bulkDelete(m.channel.messages.cache.size, true)
             selected = false
             selectedOption = null
             setTimeout(() => {
                 client.ongoingMails.delete(message.author.id)
             }, 500)
-            m.channel.bulkDelete(m.channel.messages.cache.size, true)
             collectormsg.stop()
         })
     }
