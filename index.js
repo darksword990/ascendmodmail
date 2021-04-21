@@ -16,12 +16,12 @@ client.on('message', async message => {
     // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
     if (message.channel.type == 'dm') {
         let now = Date.now()
-        let cooldownamount = ms('5s')
+        let cooldownamount = ms('5m')
         if (client.cooldowns.has(message.author.id)) {
             let expiration = client.cooldowns.get(message.author.id)+cooldownamount
             if (now < expiration) {
                 let timeleft = expiration - now
-                return message.channel.send(`You need to wait ${ms(timeleft)} before suggestion/report`)
+                return message.channel.send(`You need to wait ${ms(timeleft, {long: true})} before suggestion/report`)
             }
         }
         client.cooldowns.set(message.author.id, now)
@@ -149,7 +149,6 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
-    console.log(client.userReports.array(), reaction.message.channel.name)
     if (reaction.emoji.name == `👍` && client.userReports.array().includes(reaction.message.channel.name) && userperms.includes(user.id)) {
         client.userReports.delete(reaction.message.channel.name)
         reaction.message.channel.delete()
