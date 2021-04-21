@@ -79,7 +79,19 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
-                client.userReports.set(message.author.id, message.author.id)
+                let name;
+                if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
+                    let n = []
+                    for (const c of guild.channels.cache.array()) {
+                        if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
+                            n.push(guild.channels.cache.find(f => f.name.includes(message.author.id)))
+                        }
+                    }
+                    name = `${message.author.id}-${n.length}`
+                } else {
+                    name = `${message.author.id}`
+                }
+                client.userReports.set(name, message.author.id)
                 let perms = [
                     {
                         id: guild.id,
@@ -100,7 +112,7 @@ client.on('message', async message => {
                         )
                     }
                 }
-                let channel = await guild.channels.create(`${message.author.id}`, {
+                let channel = await guild.channels.create(`${name}`, {
                     type: 'text',
                     permissionOverwrites: perms
                 })
