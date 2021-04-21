@@ -149,6 +149,7 @@ client.on('message', async message => {
 
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.type == 'dm') return;
+    console.log(client.userReports.array(), reaction.message.channel.name)
     if (reaction.emoji.name == `👍` && client.userReports.array().includes(reaction.message.channel.name) && userperms.includes(user.id)) {
         client.userReports.delete(reaction.message.channel.name)
         reaction.message.channel.delete()
