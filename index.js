@@ -81,7 +81,14 @@ client.on('message', async message => {
                 })
             } else if (selectedOption == "Report") {
                 if (suggestchannel) {
-                    suggestchannel.send(`Report was submitted by ${message.author}`)
+                    suggestchannel.send(
+                        {
+                            embed: {
+                                title: `Report Log`,
+                                description: `Report was submitted by ${message.author}`
+                            }
+                        }
+                    )
                 }
                 let name;
                 if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
