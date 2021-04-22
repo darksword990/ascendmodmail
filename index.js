@@ -64,8 +64,8 @@ client.on('message', async message => {
             if (selected == false) return;
             let guild = client.guilds.cache.get('708194204274131005')
             let suggestchannel = guild.channels.cache.find(f => {return f.name.includes('modmail-logs')})
-            if (!suggestchannel) return;
             if (selectedOption == "Suggestion") {
+                if (!suggestchannel) return;
                 suggestchannel.send(
                     {
                         embed: {
@@ -80,6 +80,9 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
+                if (suggestchannel) {
+                    suggestchannel.send(`Report was submitted by ${message.author.id}`)
+                }
                 let name;
                 if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
                     name = `${message.author.id}-${(Math.random() * 10 + 1).toString().replace('.', '')}`
