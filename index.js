@@ -40,14 +40,14 @@ client.on('message', async message => {
                     },
                     title: 'Ascend Modmail Bot',
                     description: `
-                    Hewwos :slight_smile:\n 
-                    Welcome to our awesome server Ascend!\n 
-                    Your everyday chill and hangout server with many gamers, artists and causal peeps to have a chat with!\n
-                    We have really active Voice and Chat channels so ya wont get bored!\n
-                    Kewl emojis, activities, active and fun staff, everything is here, YA NAME IT!\n
-                    So join now and be a part of this awesome family :heart:\n\n
-                    What would you like to do?\n
-                    📑: For suggestions\n
+                    Hewwos :slight_smile:
+                    Welcome to our awesome server Ascend!
+                    Your everyday chill and hangout server with many gamers, artists and causal peeps to have a chat with!
+                    We have really active Voice and Chat channels so ya wont get bored!
+                    Kewl emojis, activities, active and fun staff, everything is here, YA NAME IT!
+                    So join now and be a part of this awesome family :heart:\n
+                    What would you like to do?
+                    📑: For suggestions
                     ⚒: For reports`,
                     color: 0x00DEFF,
                     thumbnail: {
