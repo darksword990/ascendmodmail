@@ -117,7 +117,7 @@ client.on('message', async message => {
                                     icon_url: message.author.displayAvatarURL({format: 'png', dynamic: true})
                                 },
                                 title: `Report Log`,
-                                description: `Report was submitted by ${message.author}`,
+                                description: `Report was submitted by ${message.author}\nThe Report is: ${m.content}`,
                                 color: 0x00FF33,
                                 timestamp: new Date(),
                                 footer: {
