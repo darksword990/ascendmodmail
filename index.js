@@ -107,12 +107,7 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
-                let name;
-                if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
-                    name = `${message.author.id}-${(Math.random() * 10 + 1).toString().replace('.', '')}`
-                } else {
-                    name = `${message.author.id}`
-                }
+                let name = `${message.author.id}-${(Math.random() * 10 + 1).toString().replace('.', '')}`
                 if (suggestchannel) {
                     suggestchannel.send(
                         {
