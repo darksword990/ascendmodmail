@@ -34,8 +34,26 @@ client.on('message', async message => {
         let msg = await message.channel.send(
             {
                 embed: {
+                    author: {
+                        name: message.author.tag,
+                        icon_url: message.author.displayAvatarURL({format: 'png', dynamic: true})
+                    },
                     title: 'Ascend Modmail Bot',
-                    description: `What would you like to do?\n📑: For suggestions\n⚒: For reports`
+                    description: `
+                    Hewwos :slight_smile:\n 
+                    Welcome to our awesome server Ascend!\n 
+                    Your everyday chill and hangout server with many gamers, artists and causal peeps to have a chat with!\n
+                    We have really active Voice and Chat channels so ya wont get bored!\n
+                    Kewl emojis, activities, active and fun staff, everything is here, YA NAME IT!\n
+                    So join now and be a part of this awesome family :heart:\n\n
+                    What would you like to do?\n
+                    📑: For suggestions\n
+                    ⚒: For reports`,
+                    color: 0x00DEFF,
+                    thumbnail: {
+                        url: client.user.displayAvatarURL({format: 'png'})
+                    },
+                    timestamp: new Date()
                 }
             }
         )
@@ -69,8 +87,17 @@ client.on('message', async message => {
                 suggestchannel.send(
                     {
                         embed: {
+                            author: {
+                                name: message.author.tag,
+                                icon_url: message.author.displayAvatarURL({format: 'png', dynamic: true})
+                            },
                             title: 'Suggestion',
-                            description: `${message.author.tag}: ${m.content}`
+                            description: `${message.author.tag}: ${m.content}`,
+                            color: 0x00FF33,
+                            timestamp: new Date(),
+                            footer: {
+                                text: `ID: ${message.author.id}`
+                            }
                         }
                     }
                 ).then(mm => {
@@ -80,21 +107,30 @@ client.on('message', async message => {
                     console.error(err)
                 })
             } else if (selectedOption == "Report") {
-                if (suggestchannel) {
-                    suggestchannel.send(
-                        {
-                            embed: {
-                                title: `Report Log`,
-                                description: `Report was submitted by ${message.author}`
-                            }
-                        }
-                    )
-                }
                 let name;
                 if (guild.channels.cache.find(f => f.name.includes(message.author.id))) {
                     name = `${message.author.id}-${(Math.random() * 10 + 1).toString().replace('.', '')}`
                 } else {
                     name = `${message.author.id}`
+                }
+                if (suggestchannel) {
+                    suggestchannel.send(
+                        {
+                            embed: {
+                                author: {
+                                    name: message.author.tag,
+                                    icon_url: message.author.displayAvatarURL({format: 'png', dynamic: true})
+                                },
+                                title: `Report Log`,
+                                description: `Report was submitted by ${message.author}`,
+                                color: 0x00FF33,
+                                timestamp: new Date(),
+                                footer: {
+                                    text: `Report ID: ${name}`
+                                }
+                            }
+                        }
+                    )
                 }
                 client.userReports.set(name, name)
                 let perms = [
@@ -124,8 +160,14 @@ client.on('message', async message => {
                 await channel.send(
                     {
                         embed: {
+                            author: {
+                                name: message.author.tag,
+                                icon_url: message.author.displayAvatarURL({format: 'png', dynamic: true})
+                            },
                             title: 'Report',
-                            description: `${message.author.tag}: ${m.content}`
+                            description: `${message.author.tag}: ${m.content}`,
+                            color: 0x00DEFF,
+                            timestamp: new Date(),
                         }
                     }
                 ).then(mm => {
