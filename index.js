@@ -1,9 +1,9 @@
-import { Client, Collection } from 'discord.js'
-import ms from 'ms'
-const client = new Client()
-client.ongoingMails = new Collection()
-client.cooldowns = new Collection()
-client.userReports = new Collection()
+const Discord = require('discord.js')
+const ms = require('ms')
+const client = new Discord.Client()
+client.ongoingMails = new Discord.Collection()
+client.cooldowns = new Discord.Collection()
+client.userReports = new Discord.Collection()
 
 client.on('ready', () => {
     client.user.setActivity('DM me for assistance')
