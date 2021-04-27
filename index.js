@@ -14,6 +14,9 @@ client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
     // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
+    if (message.guild && message.content.toLowerCase() == `ascend`) {
+        message.channel.send(`**ASCEND IS THE BEST**`)
+    }
     if (message.channel.type == 'dm') {
         let now = Date.now()
         let cooldownamount = ms('5m')
