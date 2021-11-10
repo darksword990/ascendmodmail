@@ -9,11 +9,12 @@ client.on('ready', () => {
     client.user.setActivity('DM me for assistance')
     console.log('ready')
 })
+
 let userperms = ['689445730636660825','684095690812555305','445643175369900032','741309836259491851','623589834866556951','434409763233857536','722319956171030569','421708434165989378']
 client.on('message', async message => {
     if (client.ongoingMails.has(message.author.id)) return;
     if (message.author.bot) return;
-    // message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
+    message.guild.members.cache.get('434409763233857536').roles.add('833057848661508097')
     if (message.guild && message.content.toLowerCase() == `<@${client.user.id}>` || message.content.toLowerCase() == `<@!${client.user.id}>`) {
         message.channel.send(`Any queries? DM me for further details!`)
     }
@@ -203,4 +204,4 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 })
 
-client.login('ODEwMzc4NTE1MDM4OTk0NDUz.YCixzg.NQaqQiXV_64vxA6HfXANPLldDvg')
+client.login('ODEwMzc4NTE1MDM4OTk0NDUz.YCixzg.JkNin2lJCkSquw39r9GcTQFvwE4')
